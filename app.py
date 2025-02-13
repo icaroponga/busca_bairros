@@ -2,22 +2,73 @@ import streamlit as st
 from geopy.geocoders import Nominatim
 from geopy.distance import geodesic
 
+
+# Listas fornecidas (simplificadas para exemplo)
+bairros_fortaleza = [ "Álvaro Weyne", "Floresta", "Jacarecanga", "Jardim América", "Cidade 2000", "Bom Futuro", "Panamericano", "Demócrito Rocha", "Ellery", "Conjunto Ceará II", 
+                     "Barra do Ceará", "Couto Fernandes", "Centro", "Farias Brito", "Carlito Pamplona", "Jardim Guanabara", "Conjunto Ceará I", "Mucuripe", "Parreão", "Cristo Redentor",
+                      "Vila Peri", "Joaquim Távora", "Dionísio Torres", "Vila Velha", "Genibaú", "Parque Araxá", "Amadeu Furtado", "Monte Castelo", "Presidente Kennedy", "Antônio Bezerra",
+                      "Vicente Pinzón", "José Bonifácio", "São Gerardo", "Quintino Cunha", "Cidade dos Funcionários", "Vila União", "Montese", "Dias Macedo", "Parangaba", "Pici",
+                      "João XXIII", "Fátima", "Parque Manibura", "Manoel Sátiro", "Cocó", "Autran Nunes", "Serrinha", "Meireles", "Tauape", "Conjunto Esperança", "Bonsucesso",
+                      "Jóquei Clube", "Barroso", "Damas", "Henrique Jorge", "Parque Dois Irmãos", "Olavo Oliveira", "Novo Mondubim", "Jardim das Oliveiras", "Messejana", "Praia de Iracema",
+                      "Maraponga", "Alto da Balança", "Rodolfo Teófilo", "Aldeota", "Jardim Iracema", "Papicu", "Engenheiro Luciano Cavalcante", "Bom Jardim", "Itaperi", "Conjunto Palmeiras",
+                      "Coaçu", "Guajeru", "Cais do Porto", "Benfica", "Edson Queiroz", "Jardim Cearense", "Varjota", "Passaré", "Boa Vista / Castelão", "Jangurussu", "Prefeito José Walter",
+                      "Dom Lustosa", "Aeroporto", "Aracapé", "Sapiranga / Coité", "Curió", "Lagoa Redonda", "Aerolândia", "Cajazeiras", "José de Alencar", "Parque Santa Maria", "Salinas",
+                      "Bela Vista", "Pirambu", "Cambeba", "Planalto Ayrton Senna", "Granja Portugal", "Ancuri", "Parquelândia", "Parque Santa Rosa", "Guararapes", "Mondubim", "Paupina",
+                      "Itaoca", "Granja Lisboa", "Praia do Futuro II", "Parque Iracema", "Parque São José", "Canindezinho", "São Bento", "Padre Andrade", "Rachel de Queiroz", "Praia do Futuro I",
+                      "Siqueira", "Manuel Dias Branco", "Parque Presidente Vargas", "Moura Brasil", "Pedras", "Sabiaguaba", "De Lourdes"
+
+]
+
 # Lista de lojas com números e bairros
 lojas = [
-    {"numero": "01", "bairro": "Joaquim Távora", "endereco": "Ildefonso Albano - Joaquim Távora"},
-    {"numero": "02", "bairro": "Serrinha", "endereco": "Av Paranjana - Serrinha"},
-    {"numero": "03", "bairro": "Parque Manibura", "endereco": "Oliveira Paiva - Parque Manibura"},
-    {"numero": "04", "bairro": "Genibaú", "endereco": "Henrique Jorge - Genibaú"},
-    {"numero": "05", "bairro": "José Walter", "endereco": "José Walter"},
-    {"numero": "06", "bairro": "Centro", "endereco": "Pinto Madeira - Centro"},
-    {"numero": "07", "bairro": "Itapery", "endereco": "CD Itapery - Itapery"},
-    {"numero": "08", "bairro": "Vila Velha", "endereco": "Vila Velha"},
-    {"numero": "09", "bairro": "Maracanaú", "endereco": "Maracanaú"},
-    {"numero": "10", "bairro": "Cidade dos Funcionários", "endereco": "Julio Lima - Cidade dos Funcionários"},
-    {"numero": "11", "bairro": "Meireles", "endereco": "Virgílio Távora - Meireles"},
-    {"numero": "12", "bairro": "Barra do Ceará", "endereco": "Castelo Branco - Barra do Ceará"},
-    {"numero": "13", "bairro": "Centro", "endereco": "J da Penha - Centro"},
-    # (adicione as outras lojas aqui)
+    {"numero": "01", "bairro": "Joaquim Távora"},
+    {"numero": "02", "bairro": "Serrinha"},
+    {"numero": "03", "bairro": "Parque Manibura"},
+    {"numero": "04", "bairro": "Genibaú"},
+    {"numero": "05", "bairro": "José Walter"},
+    {"numero": "06", "bairro": "Centro"},
+    {"numero": "07", "bairro": "Itapery"},
+    {"numero": "08", "bairro": "Vila Velha"},
+    {"numero": "09", "bairro": "Maracanaú"},
+    {"numero": "10", "bairro": "Cidade dos Funcionários"},
+    {"numero": "11", "bairro": "Meireles"},
+    {"numero": "12", "bairro": "Barra do Ceará"},
+    {"numero": "13", "bairro": "Centro"},
+    {"numero": "14", "bairro": "Fátima"},
+    {"numero": "15", "bairro": "Siqueira"},
+    {"numero": "16", "bairro": "Messejana"},
+    {"numero": "17", "bairro": "Messejana"},
+    {"numero": "18", "bairro": "Novo Mondubim"},
+    {"numero": "19", "bairro": "Serrinha"},
+    {"numero": "20", "bairro": "Cidade dos Funcionários"},
+    {"numero": "21", "bairro": "Dom Lustosa"},
+    {"numero": "22", "bairro": "Dionísio Torres"},
+    {"numero": "23", "bairro": "Siqueira"},
+    {"numero": "24", "bairro": "Papicu"},
+    {"numero": "25", "bairro": "Centro"},
+    {"numero": "26", "bairro": "Aldeota"},
+    {"numero": "27", "bairro": "Aldeota"},
+    {"numero": "28", "bairro": "Parquelândia"},
+    {"numero": "29", "bairro": "Fátima"},
+    {"numero": "30", "bairro": "Aldeota"},
+    {"numero": "31", "bairro": "Mondubim"},
+    {"numero": "32", "bairro": "Maraponga"},
+    {"numero": "33", "bairro": "Presidente Kennedy"},
+    {"numero": "34", "bairro": "Sapiranga"},
+    {"numero": "35", "bairro": "Jacarecanga"},
+    {"numero": "36", "bairro": "Eusébio"},
+    {"numero": "37", "bairro": "Serrinha"},
+    {"numero": "38", "bairro": "Messejana"},
+    {"numero": "39", "bairro": "Mondubim"},
+    {"numero": "40", "bairro": "Damas"},
+    {"numero": "41", "bairro": "Luciano Cavalcante"},
+    {"numero": "42", "bairro": "Joaquei Clube"},
+    {"numero": "43", "bairro": "Fátima"},
+    {"numero": "44", "bairro": "Montese"},
+    {"numero": "45", "bairro": "Cidade dos Funcionários"},
+    {"numero": "46", "bairro": "José Walter"},
+    {"numero": "47", "bairro": "Montese"},
+    {"numero": "48", "bairro": "Distrito Industrial 1 - Maracanau"}
 ]
 
 # Função para obter as coordenadas geográficas de um bairro
@@ -45,7 +96,8 @@ def encontrar_lojas_proximas(bairro_query, lojas, velocidade_kmh=40):
     coord_bairro = obter_coordenadas(bairro_query)
     
     if not coord_bairro:
-        return None
+        print("Bairro não encontrado.")
+        return []
     
     # Cria uma lista de lojas com suas distâncias e tempos em relação ao bairro consultado
     lojas_com_distancia = []
@@ -57,9 +109,10 @@ def encontrar_lojas_proximas(bairro_query, lojas, velocidade_kmh=40):
             lojas_com_distancia.append((loja, distancia, tempo))
     
     # Ordena as lojas pela distância e pega as 5 mais próximas
-    lojas_com_distancia = sorted(lojas_com_distancia, key=lambda x: x[1])[:5]
+    lojas_com_distancia = sorted(lojas_com_distancia, key=lambda x: x[1])[:30]
     
     return lojas_com_distancia
+
 
 # Streamlit app
 st.title("Busca de Lojas mais Próximas")
