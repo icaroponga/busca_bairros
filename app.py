@@ -73,7 +73,7 @@ lojas = [
 
 # Função para obter as coordenadas geográficas de um bairro
 def obter_coordenadas(bairro):
-    geolocator = Nominatim(user_agent="bairro_locator")
+    geolocator = Nominatim(user_agent="bairro_locator", timeout=10)
     location = geolocator.geocode(bairro + ", Fortaleza, Ceará")
     if location:
         return (location.latitude, location.longitude)
