@@ -109,7 +109,7 @@ def encontrar_lojas_proximas(bairro_query, lojas, velocidade_kmh=40):
             lojas_com_distancia.append((loja, distancia, tempo))
     
     # Ordena as lojas pela distância e pega as 5 mais próximas
-    lojas_com_distancia = sorted(lojas_com_distancia, key=lambda x: x[1])[:30]
+    lojas_com_distancia = sorted(lojas_com_distancia, key=lambda x: x[1])[:15]
     
     return lojas_com_distancia
 
@@ -117,7 +117,7 @@ def encontrar_lojas_proximas(bairro_query, lojas, velocidade_kmh=40):
 # Streamlit app
 st.title("Busca de Lojas mais Próximas")
 st.markdown("""
-    ## Encontre as 5 lojas mais próximas do bairro de Fortaleza!
+    ## Encontre as 15 lojas mais próximas ao seu bairro!
 """)
 
 # Entrada do usuário para o bairro
